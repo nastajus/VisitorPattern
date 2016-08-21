@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Visitor {
+public interface DamageVisitor {
 
-	void Visit(Visitable visitable);
+	void CauseDamageTo(DamageVisitable visitable);
 
 }

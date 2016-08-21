@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Visitable {
+public interface DamageVisitable {
 
-	void Accept(Visitor visitor);
+	void AcceptDamageFrom(DamageVisitor visitor);
 
 }

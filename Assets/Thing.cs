@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//My application of Visitor Pattern in Unity
-//GameObject A falls onto GameObject B.  Only A is supposed to trigger the Accept method of B.
+//My application of DamageVisitor Pattern in Unity
+//GameObject A falls onto GameObject B.  Only A is supposed to trigger the AcceptDamageFrom method of B.
 
-public class Thing : MonoBehaviour, Visitable, Visitor {
+public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 
 	int health = 10;
 
@@ -18,23 +18,23 @@ public class Thing : MonoBehaviour, Visitable, Visitor {
 	
 	}
 
-	void OnCollisionEnter(Collision col)
+	protected virtual void OnCollisionEnter(Collision col)
 	{
 		if (isColliding) return;
 		isColliding = true;
 
-		print("col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
+		print(" Thing parent OnCollisionEnter executing, you should override this....  col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
+		Debug.LogError("Seriously, make your child override this, I'm not joking");
 		
-		//conditional acceptance, only when A visits B, not vice-versa
-		A a = col.gameObject.GetComponent<A>();
-		if (a)
-		{
-			Visitor visitor = col.gameObject.GetComponent<Visitor>();
-			Visitable visitable = gameObject.GetComponent<Visitable>();
-			visitable.Accept(visitor);
-		}
 
-		//alternatively, this can just always call visitable.Accept(visitor), but this defeats the control sought.
+		//this logic isn't normally intended to be executed, it's just present in case as a default.
+		//when "A" extended "Thing", it overrode this method, disregarding it, and always executing it's own equivalent copy of below
+		//when "B" extended "Thing", it overrode this also, disregards it, and never executes anything.
+		DamageVisitor damager = col.gameObject.GetComponent<DamageVisitor>();
+		DamageVisitable damagable = gameObject.GetComponent<DamageVisitable>();
+		damagable.AcceptDamageFrom(damager);
+		//this can just always call visitable.AcceptDamageFrom(visitor)
+		//however, the child class "B" can override the AcceptDamageFrom method
 	}
 
 	void OnCollisionExit(Collision col)
@@ -50,15 +50,15 @@ public class Thing : MonoBehaviour, Visitable, Visitor {
 		print("health of : " + this + " is: " + health);
 	}
 
-	public void Accept(Visitor visitor)
+	public void AcceptDamageFrom(DamageVisitor damager)
 	{
-		print(visitor + " accepts " + this);
-		visitor.Visit(this);
+		print(damager + " accepts damage from " + this);
+		damager.CauseDamageTo(this);
 	}
 	
-	public void Visit(Visitable visitiable)
+	public void CauseDamageTo(DamageVisitable damagable)
 	{
-		print(visitiable + " visits " + this);
+		print(damagable + " causes damage to " + this);
 		ReduceHealthBWhenAinteracts();
 	}
 
