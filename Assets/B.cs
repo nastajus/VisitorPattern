@@ -28,8 +28,9 @@ public class B : Thing {
 
 	public override int AcceptDamageFrom(DamageVisitor damager)
 	{
-		print("B AcceptDamageFrom executes... " + this + " accepts damage from " + damager );
-		health -= damager.CauseDamageTo(this);
+		int damageAmount = damager.CauseDamageTo(this);
+		print("B AcceptDamageFrom executes... " + this + " accepts damage amount " + damageAmount + " from " + damager );
+		health -= damageAmount;
 
 		ReportHealth();
 
