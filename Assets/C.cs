@@ -8,7 +8,7 @@ public class C : Thing {
 	private List<GameObject> isColliding = new List<GameObject>();
 
 	//do nothing, particularly, do not call AcceptDamageFrom at all
-	void OnCollisionEnter(Collision col)
+	protected override void OnCollisionEnter(Collision col)
 	{
 		if (isColliding.Contains(col.gameObject)) return;
 		isColliding.Add(col.gameObject);
@@ -16,7 +16,7 @@ public class C : Thing {
 		print("A OnCollisionEnter executing... does nothing");
 	}
 
-	void OnCollisionExit(Collision col)
+	protected override void OnCollisionExit(Collision col)
 	{
 		isColliding.Remove(col.gameObject);
 	}

@@ -20,21 +20,9 @@ public abstract class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 	
 	}
 
-	void OnCollisionEnter(Collision col)
-	{
-		if (isColliding.Contains(col.gameObject)) return;
-		isColliding.Add(col.gameObject);
+	protected abstract void OnCollisionEnter(Collision col);
 
-		print(" Thing parent OnCollisionEnter executing, you should override this....  col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
-		Debug.LogError("Seriously, make your child override this, I'm not joking");
-
-	}
-
-	void OnCollisionExit(Collision col)
-	{
-		isColliding.Remove(col.gameObject);
-	}
-
+	protected abstract void OnCollisionExit(Collision col);
 
 
 	public virtual int AcceptDamageFrom(DamageVisitor damager)

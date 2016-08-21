@@ -9,7 +9,7 @@ public class B : Thing {
 	private List<GameObject> isColliding = new List<GameObject>();
 
 	// initiates receipt of damage
-	void OnCollisionEnter(Collision col)
+	protected override void OnCollisionEnter(Collision col)
 	{
 		if (isColliding.Contains(col.gameObject)) return;
 		isColliding.Add(col.gameObject);
@@ -24,7 +24,7 @@ public class B : Thing {
 		//however, the child class "B" can override the AcceptDamageFrom method
 	}
 
-	void OnCollisionExit(Collision col)
+	protected override void OnCollisionExit(Collision col)
 	{
 		isColliding.Remove(col.gameObject);
 	}

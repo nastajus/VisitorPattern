@@ -12,7 +12,7 @@ public class A : Thing {
 
 
 	//do nothing, particularly, do not call AcceptDamageFrom at all
-	void OnCollisionEnter(Collision col)
+	protected override void OnCollisionEnter(Collision col)
 	{
 		if (isColliding.Contains(col.gameObject)) return;
 		isColliding.Add(col.gameObject);
@@ -20,7 +20,7 @@ public class A : Thing {
 		//print("A OnCollisionEnter executing... does nothing");
 	}
 
-	void OnCollisionExit(Collision col)
+	protected override void OnCollisionExit(Collision col)
 	{
 		isColliding.Remove(col.gameObject);
 	}
