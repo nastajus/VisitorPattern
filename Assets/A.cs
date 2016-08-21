@@ -7,6 +7,8 @@ public class A : Thing {
 
 	bool isColliding = false; // required to limit multiple executions for a single OnCollisionEnter to once per instance
 
+	int damage = 3;
+
 	protected override void OnCollisionEnter(Collision col)
 	{
 		if (isColliding) return;
@@ -32,7 +34,7 @@ public class A : Thing {
 	public override int CauseDamageTo(DamageVisitable damagable)
 	{
 		print("A CauseDamageTo executing...");
-		int damageAmount = base.CauseDamageTo(damagable);
+		int damageAmount = damage;
 		return damageAmount;
 	}
 

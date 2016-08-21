@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 
-	int health = 10;
+	public int health = 10;
 
 	bool isColliding = false; // required to limit multiple executions for a single OnCollisionEnter to once per instance
 
@@ -51,9 +51,9 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 		return health;
 	}
 
-	public int AcceptDamageFrom(DamageVisitor damager)
+	public virtual int AcceptDamageFrom(DamageVisitor damager)
 	{
-		print(damager + " accepts damage from " + this);
+		print("Thing AcceptDamageFrom executes... " + damager + " accepts damage from " + this);
 		int healthAmount = damager.CauseDamageTo(this);
 		return healthAmount;
 	}
