@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //suppose "B" is the "Vehicle" which receives the attack, and only receives from "A" (Zombie)
 public class B : Thing {
 
-	bool isColliding = false;  
+	// required to limit multiple executions for a single OnCollisionEnter to once per instance
+	private List<GameObject> isColliding = new List<GameObject>();
 
-	protected override void OnCollisionEnter(Collision col)
+	// initiates receipt of damage
+	void OnCollisionEnter(Collision col)
 	{
-		if (isColliding) return;
-		isColliding = true;
+		if (isColliding.Contains(col.gameObject)) return;
+		isColliding.Add(col.gameObject);
 
 		print("B OnCollisionEnter executing... col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
 
@@ -23,13 +26,13 @@ public class B : Thing {
 
 	void OnCollisionExit(Collision col)
 	{
-		isColliding = false;
+		isColliding.Remove(col.gameObject);
 	}
 
 	public override int AcceptDamageFrom(DamageVisitor damager)
 	{
 		int damageAmount = damager.CauseDamageTo(this);
-		print("B AcceptDamageFrom executes... " + this + " accepts damage amount " + damageAmount + " from " + damager );
+		//print("B AcceptDamageFrom executes... " + this + " accepts damage amount " + damageAmount + " from " + damager );
 		health -= damageAmount;
 
 		ReportHealth();

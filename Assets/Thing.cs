@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //My application of DamageVisitor Pattern in Unity
 //GameObject A falls onto GameObject B.  Only A is supposed to trigger the AcceptDamageFrom method of B.
 
-public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
+public abstract class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 
 	public int health = 10;
 
-	bool isColliding = false; // required to limit multiple executions for a single OnCollisionEnter to once per instance
+	// required to limit multiple executions for a single OnCollisionEnter to once per instance
+	List<GameObject> isColliding = new List<GameObject>();
 
 	void Start () {
 	
@@ -18,10 +20,10 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 	
 	}
 
-	protected virtual void OnCollisionEnter(Collision col)
+	void OnCollisionEnter(Collision col)
 	{
-		if (isColliding) return;
-		isColliding = true;
+		if (isColliding.Contains(col.gameObject)) return;
+		isColliding.Add(col.gameObject);
 
 		print(" Thing parent OnCollisionEnter executing, you should override this....  col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
 		Debug.LogError("Seriously, make your child override this, I'm not joking");
@@ -30,7 +32,7 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 
 	void OnCollisionExit(Collision col)
 	{
-		isColliding = false;
+		isColliding.Remove(col.gameObject);
 	}
 
 
