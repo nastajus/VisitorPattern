@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-//it seems inheriently wrong to invoke Accept from within Visit... but I cannot prove nor disprove this easily.
-//however in this case since the "Thing" class is designed to be both the Visitor + Visitable, it may actually make sense
-//thus I want to conditionally control execution of the Accept call here
-//if A is arriving, invoke
+//My application of Visitor Pattern in Unity
+//GameObject A falls onto GameObject B.  Only A is supposed to trigger the Accept method of B.
 
 public class Thing : MonoBehaviour, Visitable, Visitor {
 
@@ -36,23 +33,13 @@ public class Thing : MonoBehaviour, Visitable, Visitor {
 			Visitable visitable = gameObject.GetComponent<Visitable>();
 			visitable.Accept(visitor);
 		}
+
+		//alternatively, this can just always call visitable.Accept(visitor), but this defeats the control sought.
 	}
 
 	void OnCollisionExit(Collision col)
 	{
 		isColliding = false;
-	}
-
-	public void Visit(Visitable visitiable)
-	{
-		print(visitiable + " visits " + this + ", but so what?" );
-		ReduceHealthBWhenAinteracts();
-	}
-
-	public void Accept(Visitor visitor)
-	{
-		print(visitor + " accepts " + this);
-		visitor.Visit(this);
 	}
 
 	//goal is to only trigger this method from A colliding with B, and not vice-versa
@@ -61,6 +48,18 @@ public class Thing : MonoBehaviour, Visitable, Visitor {
 	{
 		health -= 3;
 		print("health of : " + this + " is: " + health);
+	}
+
+	public void Accept(Visitor visitor)
+	{
+		print(visitor + " accepts " + this);
+		visitor.Visit(this);
+	}
+	
+	public void Visit(Visitable visitiable)
+	{
+		print(visitiable + " visits " + this);
+		ReduceHealthBWhenAinteracts();
 	}
 
 }
