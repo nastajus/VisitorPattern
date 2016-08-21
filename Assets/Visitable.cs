@@ -3,6 +3,6 @@ using System.Collections;
 
 public interface DamageVisitable {
 
-	void AcceptDamageFrom(DamageVisitor visitor);
+	int AcceptDamageFrom(DamageVisitor visitor);
 
 }

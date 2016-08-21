@@ -44,22 +44,25 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 
 	//goal is to only trigger this method from A colliding with B, and not vice-versa
 	//ideally in a manner that seems clean
-	private void ReduceHealthBWhenAinteracts()
+	private int ReduceHealthBWhenAinteracts()
 	{
 		health -= 3;
 		print("health of : " + this + " is: " + health);
+		return health;
 	}
 
-	public void AcceptDamageFrom(DamageVisitor damager)
+	public int AcceptDamageFrom(DamageVisitor damager)
 	{
 		print(damager + " accepts damage from " + this);
-		damager.CauseDamageTo(this);
+		int healthAmount = damager.CauseDamageTo(this);
+		return healthAmount;
 	}
 	
-	public void CauseDamageTo(DamageVisitable damagable)
+	public virtual int CauseDamageTo(DamageVisitable damagable)
 	{
-		print(damagable + " causes damage to " + this);
-		ReduceHealthBWhenAinteracts();
+		print("Thing CauseDamageTo executing... " + damagable + " causes damage to " + this);
+		int damageAmount = ReduceHealthBWhenAinteracts();
+		return damageAmount;
 	}
 
 }

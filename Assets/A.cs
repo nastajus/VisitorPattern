@@ -29,4 +29,11 @@ public class A : Thing {
 		isColliding = false;
 	}
 
+	public override int CauseDamageTo(DamageVisitable damagable)
+	{
+		print("A CauseDamageTo executing...");
+		int damageAmount = base.CauseDamageTo(damagable);
+		return damageAmount;
+	}
+
 }

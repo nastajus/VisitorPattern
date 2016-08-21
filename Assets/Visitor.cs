@@ -3,6 +3,6 @@ using System.Collections;
 
 public interface DamageVisitor {
 
-	void CauseDamageTo(DamageVisitable visitable);
+	int CauseDamageTo(DamageVisitable visitable);
 
 }
