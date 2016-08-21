@@ -182,7 +182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 948540847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f7a625569f9cc45ae289e911bfce6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9467862b05c2b6c4a8b6585784659cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &948540849
@@ -210,7 +210,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!23 &948540851
 MeshRenderer:
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1518953908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f7a625569f9cc45ae289e911bfce6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ae5225117cadaa4f81b28dd82ade1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &1518953910
@@ -417,7 +417,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!23 &1518953912
 MeshRenderer:
