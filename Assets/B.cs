@@ -6,13 +6,19 @@ public class B : Thing {
 
 	bool isColliding = false;  
 
-	//do nothing, particularly, do not call AcceptDamageFrom at all
 	protected override void OnCollisionEnter(Collision col)
 	{
 		if (isColliding) return;
 		isColliding = true;
 
-		print("B OnCollisionEnter executing... does nothing");
+		print("B OnCollisionEnter executing... col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
+
+		DamageVisitor damager = col.gameObject.GetComponent<DamageVisitor>();
+		DamageVisitable damagable = gameObject.GetComponent<DamageVisitable>();
+		damagable.AcceptDamageFrom(damager);
+		//since this is in "A" class only, it would only invoke from here
+		//this can just always call visitable.AcceptDamageFrom(visitor)
+		//however, the child class "B" can override the AcceptDamageFrom method
 	}
 
 	void OnCollisionExit(Collision col)
@@ -22,12 +28,19 @@ public class B : Thing {
 
 	public override int AcceptDamageFrom(DamageVisitor damager)
 	{
-		print("B AcceptDamageFrom executes... " + damager + " accepts damage from " + this);
+		print("B AcceptDamageFrom executes... " + this + " accepts damage from " + damager );
 		health -= damager.CauseDamageTo(this);
+
+		ReportHealth();
 
 		//it's debatable whether this should return 1) new health, or 2) damage amount caused, or 3) some struct or class containing both and/or more of these
 		//for the moment the simplest option is to just return the quantity just manipulated, health
 		return health;
+	}
+
+	private void ReportHealth()
+	{
+		print("health of : " + this + " is: " + health);
 	}
 
 }

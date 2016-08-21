@@ -25,16 +25,7 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 
 		print(" Thing parent OnCollisionEnter executing, you should override this....  col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
 		Debug.LogError("Seriously, make your child override this, I'm not joking");
-		
 
-		//this logic isn't normally intended to be executed, it's just present in case as a default.
-		//when "A" extended "Thing", it overrode this method, disregarding it, and always executing it's own equivalent copy of below
-		//when "B" extended "Thing", it overrode this also, disregards it, and never executes anything.
-		DamageVisitor damager = col.gameObject.GetComponent<DamageVisitor>();
-		DamageVisitable damagable = gameObject.GetComponent<DamageVisitable>();
-		damagable.AcceptDamageFrom(damager);
-		//this can just always call visitable.AcceptDamageFrom(visitor)
-		//however, the child class "B" can override the AcceptDamageFrom method
 	}
 
 	void OnCollisionExit(Collision col)
@@ -42,14 +33,7 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 		isColliding = false;
 	}
 
-	//goal is to only trigger this method from A colliding with B, and not vice-versa
-	//ideally in a manner that seems clean
-	private int ReduceHealthBWhenAinteracts()
-	{
-		health -= 3;
-		print("health of : " + this + " is: " + health);
-		return health;
-	}
+
 
 	public virtual int AcceptDamageFrom(DamageVisitor damager)
 	{
@@ -60,9 +44,8 @@ public class Thing : MonoBehaviour, DamageVisitable, DamageVisitor {
 	
 	public virtual int CauseDamageTo(DamageVisitable damagable)
 	{
-		print("Thing CauseDamageTo executing... " + damagable + " causes damage to " + this);
-		int damageAmount = ReduceHealthBWhenAinteracts();
-		return damageAmount;
+		print("Thing CauseDamageTo executing... ");// + damagable + " causes damage to " + this);
+		return 0;
 	}
 
 }

@@ -9,21 +9,16 @@ public class A : Thing {
 
 	int damage = 3;
 
+
+	//do nothing, particularly, do not call AcceptDamageFrom at all
 	protected override void OnCollisionEnter(Collision col)
 	{
 		if (isColliding) return;
 		isColliding = true;
 
-		print("A OnCollisionEnter executing... col.gameObject.name: " + col.gameObject.name + ", this.gameObject.name: " + this.gameObject.name);
-
-
-		DamageVisitor damager = col.gameObject.GetComponent<DamageVisitor>();
-		DamageVisitable damagable = gameObject.GetComponent<DamageVisitable>();
-		damagable.AcceptDamageFrom(damager);
-		//since this is in "A" class only, it would only invoke from here
-		//this can just always call visitable.AcceptDamageFrom(visitor)
-		//however, the child class "B" can override the AcceptDamageFrom method
+		print("A OnCollisionEnter executing... does nothing");
 	}
+
 
 
 	void OnCollisionExit(Collision col)
